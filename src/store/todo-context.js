@@ -5,6 +5,7 @@ const TodoContext = createContext([
     todos: [],
     deleteTodo: (todoID) => {},
     addNewTodo: (todo) => {},
+    toggle: (todoID) => {},
   },
 ]);
 
@@ -22,10 +23,24 @@ export const TodoContextProvider = (props) => {
     });
   };
 
+  const toggleTodoHandler = (todoID) => {
+    setTodos((prevTodos) => {
+      let newTodos = [];
+      newTodos = prevTodos.map((todo) => {
+        if (todo.id === todoID) {
+          todo.checked = !todo.checked;
+        }
+        return todo;
+      });
+      return newTodos;
+    });
+  };
+
   const context = {
     todos: todos,
     deleteTodo: deleteTodoHandler,
     addNewTodo: addNewTodoHandler,
+    toggle: toggleTodoHandler,
   };
 
   return (
